@@ -1,7 +1,14 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: login.php");
+    exit();
+}
+
 include 'config/koneksi.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nisn = $_POST['nisn'];
     $nama = $_POST['nama'];
     $kelas = $_POST['kelas'];
@@ -13,34 +20,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         header('Location: index.php');
         exit();
     } else {
-        echo "Gagal menambahkan data: ".mysqli_error($conn);
+        echo "Gagal menambahkan data: " . mysqli_error($conn);
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Siswa</title>
     <link rel="stylesheet" href="style/style.css">
 </head>
-<body>
-    <head>
-        <h1>Tambah Siswa</h1><br><br>
-    </head>
-    <main>
-        <form action="" method="post">
-            <label for="nisn">NISN</label><br>
-            <input type="text" name="nisn" id="nisn" placeholder="10 digit" required><br><br>
+<body class="bg-light page-center">
+    <main class="form-card">
+        <header class="form-header">
+            <h2>Tambah Siswa</h2>
+        </header>
 
-            <label for="nama">Nama</label><br>
-            <input type="text" name="nama" id="" placeholder="Nama Lengkap" required><br><br>
+        <form action="" method="post" class="form-body">
+            <div class="form-group">
+                <label for="nisn">NISN</label>
+                <input type="text" name="nisn" id="nisn" placeholder="10 digit NISN" required>
+            </div>
 
-            <label for="kelas">Kelas</label><br>
-            <input type="text" name="kelas" id="kelas" placeholder="Kelas dan Jurusan" required><br><br>
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" name="nama" id="nama" placeholder="Masukkan nama lengkap" required>
+            </div>
 
-            <input type="submit" value="Tambah"> | <a class="back-link" href="index.php">Batal</a>
+            <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <input type="text" name="kelas" id="kelas" placeholder="Contoh: XII RPL 1" required>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="index.php" class="btn btn-secondary">Batal</a>
+            </div>
         </form>
     </main>
 </body>

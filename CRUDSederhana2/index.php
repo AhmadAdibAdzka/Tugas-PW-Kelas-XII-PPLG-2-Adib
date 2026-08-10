@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: login.php");
+    exit();
+}
+
 include "config/koneksi.php";
 
 $query = "SELECT * FROM siswa ORDER BY nama DESC";
@@ -50,6 +57,8 @@ $result_siswa = mysqli_query($conn, $query);
         </tbody>
       </table>
     </main>
-    <footer></footer>
+    <footer>
+      <a href="logout.php">Logout</a>
+    </footer>
   </body>
 </html>
